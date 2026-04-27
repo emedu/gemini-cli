@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 Gemini CLI - 系統自動化診斷腳本
 
@@ -34,7 +34,7 @@ Write-Host ""
 # 階段 2：資源瓶頸即時監控
 # ---------------------------------------------------------
 Write-Host "[2/4] 正在抓取前 5 大 CPU 效能怪獸..." -ForegroundColor Green
-Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 -Property Name, CPU, WorkingSet | Format-Table -AutoSize
+Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 -Property Name, CPU, WorkingSet | Format-Table -AutoSize | Out-String | Write-Host
 Write-Host ""
 
 # ---------------------------------------------------------
@@ -42,7 +42,7 @@ Write-Host ""
 # ---------------------------------------------------------
 Write-Host "[3/4] 正在讀取最近 3 筆系統錯誤日誌..." -ForegroundColor Green
 try {
-    Get-EventLog -LogName System -EntryType Error -Newest 3 | Select-Object TimeGenerated, Source, Message | Format-Table -AutoSize -Wrap
+    Get-EventLog -LogName System -EntryType Error -Newest 3 | Select-Object TimeGenerated, Source, Message | Format-Table -AutoSize -Wrap | Out-String | Write-Host
 } catch {
     Write-Host "無法讀取日誌或目前無錯誤紀錄。" -ForegroundColor DarkGray
 }
@@ -52,7 +52,7 @@ Write-Host ""
 # 階段 4：啟動項與服務檢查
 # ---------------------------------------------------------
 Write-Host "[4/4] 正在列出開機自動啟動的程式..." -ForegroundColor Green
-Get-CimInstance Win32_StartupCommand | Select-Object Caption, Command | Format-Table -AutoSize -Wrap
+Get-CimInstance Win32_StartupCommand | Select-Object Caption, Command | Format-Table -AutoSize -Wrap | Out-String | Write-Host
 Write-Host ""
 
 Write-Host "========================================" -ForegroundColor Cyan
