@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Gemini CLI - 系統自動化診斷腳本
 
